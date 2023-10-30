@@ -4,11 +4,7 @@ function getComputerChoice() {
     return choiceArray[Math.floor(Math.random() * choiceArray.length)];
 }
 
-const playerSelection = "rock";
 const computerSelection = getComputerChoice(choiceArray);
-
-console.log("Computer Choice: " + computerSelection);
-console.log("Player Choice: " + playerSelection);
 
 function playRound(playerSelection, computerSelection) {
     const rules = {
@@ -17,18 +13,45 @@ function playRound(playerSelection, computerSelection) {
         scissors: 'paper'
     };
 
-    if (computerSelection === playerSelection) {
-        console.log("It's a tie! Both chose " + computerSelection + ".");
+    if (playerSelection === computerSelection) {
+        console.log("It's a tie! Both chose " + playerSelection);
         return 'tie';
     }
 
     if (rules[playerSelection] === computerSelection) {
-        console.log('Player wins! ' + playerSelection + ' beats ' + computerSelection + '.');
+        console.log("You win! " + playerSelection + " beats " + computerSelection + ".");
         return 'player';
     }
 
-    console.log('Computer wins! ' + computerSelection + ' beats ' + playerSelection + '.');
+    console.log("You lose! " + computerSelection + " beats " + playerSelection + ".");
     return 'computer';
 }
 
-playRound(playerSelection, computerSelection);
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for (let round = 1; round <= 5; round++) {
+        const playerSelection = prompt("Enter your choice:").toLowerCase();
+        const computerSelection = getComputerChoice(choiceArray);
+
+        console.log(`Round ${round}: ${playerSelection} vs. ${computerSelection}`);
+        const winner = playRound(playerSelection, computerSelection);
+
+        if (winner === 'player') {
+            playerScore++;
+        } else if (winner === 'computer') {
+            computerScore++;
+        }        
+    }
+
+    if(playerScore > computerScore) {
+        console.log('Player wins the game!');
+    } else if (playerScore < computerScore) {
+        console.log("Computer wins the game!");
+    } else {
+        console.log("It's a tie! No overall winner.");
+    }
+}
+
+game();
